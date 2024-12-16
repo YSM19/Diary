@@ -1,0 +1,81 @@
+.diary-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.image-upload {
+    margin-top: 30px;
+}
+
+.image-upload label {
+    font-weight: bold;
+}
+
+.image-preview {
+    margin-top: 20px;
+}
+
+.image-preview img {
+    border-radius: 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* 공통 버튼 스타일 */
+.save-button,
+.delete-button {
+    flex: 1;  /* 버튼들이 동일한 너비를 가지도록 설정 */
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 100px;  /* 최소 너비 설정 */
+    font-size: 16px;   /* 글자 크기 통일 */
+}
+
+.save-button {
+    background-color: #4285f4;
+}
+
+.save-button:hover {
+    background-color: #3367d6;
+}
+
+.delete-button {
+    background-color: #ff4444;
+}
+
+.delete-button:hover {
+    background-color: #cc0000;
+}
+
+.emotion-display {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.selected-emotion {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.emotion-emoji {
+    font-size: 32px;
+}
+
+.emotion-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}

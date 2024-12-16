@@ -1,0 +1,74 @@
+.statistics-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Pretendard', sans-serif;
+}
+
+.statistics-container h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #333;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.total-count {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.total-count h2 {
+    color: #666;
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.total-count p {
+    font-size: 36px;
+    font-weight: 700;
+    color: #333;
+}
+
+.chart-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.pie-chart, .bar-chart {
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.pie-chart h2, .bar-chart h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.error-message {
+    text-align: center;
+    color: #dc3545;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+} 

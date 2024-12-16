@@ -1,0 +1,24 @@
+/* src/index.css */
+.calendar-view {
+  text-align: center;
+}
+
+.diary-form input,
+.diary-form textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.emotion-selector .emotions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.emotion-selector .emotion {
+  cursor: pointer;
+}
+
+.emotion-selector .emotion.selected {
+  border: 2px solid blue;
+}

@@ -1,0 +1,134 @@
+.update-profile-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+h3 {
+    color: #495057;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #495057;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.2);
+}
+
+.form-group input:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.button-group {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.button-group.center {
+    justify-content: center;
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button[type="submit"] {
+    background-color: #4dabf7;
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #3793dd;
+}
+
+.cancel-button {
+    background-color: #868e96;
+    color: white;
+}
+
+.cancel-button:hover {
+    background-color: #6c757d;
+}
+
+.error-message {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: #e03131;
+    background-color: #fff5f5;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.success-message {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: #2b8a3e;
+    background-color: #ebfbee;
+    border-radius: 6px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .update-profile-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .form-section {
+        padding: 1rem;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+} 
