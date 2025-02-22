@@ -8,14 +8,14 @@ spring:
     username: root
     password: 1234
   
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
+  # jpa:
+  #   show-sql: true
+  #   hibernate:
+  #     ddl-auto: update
+  #   properties:
+  #     hibernate:
+  #       format_sql: true
+  #       dialect: org.hibernate.dialect.MySQLDialect
   
   servlet:
     multipart:
@@ -26,3 +26,10 @@ spring:
 # 파일 업로드 경로 설정
 file:
   upload-dir: ${user.dir}/uploads 
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+#  config-location: classpath:mybatis-config.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.backend.diary.entity

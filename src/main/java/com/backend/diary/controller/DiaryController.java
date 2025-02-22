@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,10 +49,8 @@ public class DiaryController {
                 return ResponseEntity.badRequest().body("사용자 이메일이 필요합니다.");
             }
 
-            UserEntity user = userService.findUserByEmail(email);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다.");
-            }
+            UserEntity user = userService.findUserByEmail(email)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "인증되지 않은 사용자입니다."));
 
             // 이미지 처리
             if (image != null && !image.isEmpty()) {
@@ -79,10 +77,8 @@ public class DiaryController {
                                                                    @PathVariable int year, 
                                                                    @PathVariable int month) {
         try {
-            UserEntity user = userService.findUserByEmail(email);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
+            UserEntity user = userService.findUserByEmail(email)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "권한이 없습니다."));
 
             List<DiaryEntity> diaries = diaryService.getMonthlyDiaries(user.getId(), year, month);
 
@@ -99,10 +95,8 @@ public class DiaryController {
     @GetMapping("/{date}") // 날짜 기준 일기 조회
     public ResponseEntity<?> getDiary(@PathVariable String date, @RequestParam String userEmail) {
         try {
-            UserEntity user = userService.findUserByEmail(userEmail);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("권한이 없습니다.");
-            }
+            UserEntity user = userService.findUserByEmail(userEmail)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "권한이 없습니다."));
 
             DiaryEntity diary = diaryService.getDiaryByDateAndUserId(date, user.getId());
             if (diary == null) {
@@ -126,10 +120,8 @@ public class DiaryController {
                 return ResponseEntity.badRequest().body("사용자 이메일이 필요합니다.");
             }
 
-            UserEntity user = userService.findUserByEmail(email);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다.");
-            }
+            UserEntity user = userService.findUserByEmail(email)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "인증되지 않은 사용자입니다."));
 
             // 기존 일기 조회
             DiaryEntity existingDiary = diaryService.getDiaryById(diaryId);
@@ -157,10 +149,8 @@ public class DiaryController {
     @DeleteMapping("/{diaryId}/delete")
     public ResponseEntity<?> deleteDiary(@PathVariable Long diaryId, @RequestParam String userEmail) {
         try {
-            UserEntity user = userService.findUserByEmail(userEmail);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("권한이 없습니다.");
-            }
+            UserEntity user = userService.findUserByEmail(userEmail)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "권한이 없습니다."));
 
             diaryService.deleteById(diaryId);
             return ResponseEntity.ok().build();
@@ -179,7 +169,7 @@ public class DiaryController {
         
         String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
         Path filePath = uploadPath.resolve(fileName);
-        Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING); // 같은 이름의 파일이 있으면 덮어쓰기
+        Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING); // 같은 이름의 이미지가 이미 업로드되어있으면 덮어쓰기
         
         diaryRequest.setImageName(fileName);
         diaryRequest.setImagePath("/uploads/" + fileName);

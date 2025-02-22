@@ -7,12 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/statistics")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class StatisticsController {
     private final StatisticsService statisticsService;
     private final UserService userService;
@@ -20,14 +22,14 @@ public class StatisticsController {
     @GetMapping("/emotions")
     public ResponseEntity<?> getEmotionStatistics(@RequestParam String email) {
         try {
-            UserEntity user = userService.findUserByEmail(email);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("user is null");
-            }
-
+            UserEntity user = userService.findUserByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            
             Map<String, Object> statistics = statisticsService.getEmotionStatistics(user.getId());
+            System.out.println("Statistics data: " + statistics);
             return ResponseEntity.ok(statistics);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
