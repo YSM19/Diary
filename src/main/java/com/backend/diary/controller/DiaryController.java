@@ -92,6 +92,26 @@ public class DiaryController {
         }
     }
 
+    @GetMapping("/history") // 사용자의 모든 일기 내역 조회
+    public ResponseEntity<?> getUserDiaryHistory(@RequestParam String email) {
+        try {
+            UserEntity user = userService.findUserByEmail(email)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "권한이 없습니다."));
+
+            List<DiaryEntity> diaries = diaryService.getDiariesByUserId(user.getId());
+            
+            // 일기 목록을 DiaryResponse 형태로 변환
+            List<DiaryResponse> response = diaries.stream()
+                .map(diary -> diaryService.toResponse(diary))
+                .collect(Collectors.toList());
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("일기 내역 조회 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/{date}") // 날짜 기준 일기 조회
     public ResponseEntity<?> getDiary(@PathVariable String date, @RequestParam String userEmail) {
         try {

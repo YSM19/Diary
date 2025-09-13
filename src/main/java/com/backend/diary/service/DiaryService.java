@@ -9,6 +9,7 @@ import com.backend.diary.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 
 @Service
@@ -51,10 +52,11 @@ public class DiaryService {
         UserEntity user = userMapper.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        LocalDateTime start = LocalDateTime.of(year, month, 1, 0, 0);
-        LocalDateTime end = start.plusMonths(1).minusSeconds(1);
+        YearMonth ym = YearMonth.of(year, month);
+        String startDate = ym.atDay(1).toString();       // yyyy-MM-01
+        String endDate = ym.atEndOfMonth().toString();   // yyyy-MM-lastDay
 
-        return diaryMapper.findByUserAndUpdatedAtBetween(userId, start, end);
+        return diaryMapper.findByUserAndDateBetween(userId, startDate, endDate);
     }
 
     public DiaryEntity updateDiary(Long diaryId, DiaryRequest request) {

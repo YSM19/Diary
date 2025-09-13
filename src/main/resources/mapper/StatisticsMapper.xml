@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.backend.diary.mapper.StatisticsMapper">
+
+    <select id="findDiariesByUserId" resultMap="com.backend.diary.mapper.DiaryMapper.DiaryResultMap">
+        SELECT d.*, u.email as user_email, u.username
+        FROM diary d
+                 JOIN user u ON d.user_id = u.id
+        WHERE d.user_id = #{userId}
+    </select>
+
+    <select id="countTotalDiaries" resultType="int">
+        SELECT COUNT(*)
+        FROM diary
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="countEmotionsByUser" resultType="map">
+        SELECT
+            emotion,
+            COUNT(*) as count
+        FROM diary
+        WHERE user_id = #{userId}
+          AND emotion IS NOT NULL
+        GROUP BY emotion
+    </select>
+
+    <select id="getMonthlyEmotionStats" resultType="map">
+        SELECT
+            DATE_FORMAT(date, '%Y-%m') as month,
+            emotion,
+            COUNT(*) as count
+        FROM diary
+        WHERE user_id = #{userId}
+          AND emotion IS NOT NULL
+        GROUP BY DATE_FORMAT(date, '%Y-%m'), emotion
+        ORDER BY month ASC
+    </select>
+
+</mapper>
